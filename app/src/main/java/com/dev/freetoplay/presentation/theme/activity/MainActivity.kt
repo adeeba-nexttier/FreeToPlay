@@ -1,4 +1,4 @@
-package com.dev.freetoplay
+package com.dev.freetoplay.presentation.theme.activity
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
