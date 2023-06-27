@@ -1,4 +1,4 @@
-package com.dev.freetoplay.presentation.theme.activity
+package com.dev.freetoplay.presentation.activity
 
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
