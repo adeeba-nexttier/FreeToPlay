@@ -39,7 +39,8 @@ fun Index(
     availableGames: Resource<List<Game>>,
     onOpenDrawer: () -> Unit,
     onSearchButtonClick: () -> Unit,
-    onGameClick: (Int) -> Unit
+    onGameClick: (Int) -> Unit,
+    onPlayTheGameClicked: (String) -> Unit
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
@@ -139,7 +140,11 @@ fun Index(
             composable(route = Screen.GameDetailScreen.route) {
                 val viewModel = hiltViewModel<GameDetailViewModel>()
                 GameDetailScreen(
-                    viewModel = viewModel
+                    viewModel = viewModel,
+                    navController = navController,
+                    onPlayTheGameClicked = { gameUrl ->
+                        onPlayTheGameClicked(gameUrl)
+                    }
                 )
             }
         }

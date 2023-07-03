@@ -11,6 +11,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.platform.LocalUriHandler
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
 import com.dev.freetoplay.presentation.screen.base.Index
@@ -35,6 +36,8 @@ class MainActivity : ComponentActivity() {
             val navController = rememberNavController()
             val availableGames by mainViewModel.games.collectAsState()
             val scope = rememberCoroutineScope()
+            val uriHandler = LocalUriHandler.current
+
             FreeToPlayTheme(
                 darkTheme = isSystemInDarkTheme()
             ) {
@@ -52,6 +55,9 @@ class MainActivity : ComponentActivity() {
                     },
                     onGameClick = { gameId ->
                         navController.navigate(route = "gameDetail/$gameId")
+                    },
+                    onPlayTheGameClicked = { gameUrl ->
+                        uriHandler.openUri(uri = gameUrl)
                     }
                 )
             }

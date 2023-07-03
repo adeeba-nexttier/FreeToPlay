@@ -28,8 +28,8 @@ import androidx.legacy.widget.Space
 import com.dev.freetoplay.R
 import com.dev.freetoplay.domain.model.Game
 import com.dev.freetoplay.presentation.component.CarouselView
-import com.dev.freetoplay.presentation.component.EmptyResult
 import com.dev.freetoplay.presentation.component.GameCard
+import com.dev.freetoplay.presentation.component.WarningMessage
 import com.dev.freetoplay.util.Resource
 import com.dev.freetoplay.util.getUrls
 import com.dev.freetoplay.util.header
@@ -45,7 +45,7 @@ fun HomeScreen(
         val screenHeight = LocalContext.current.resources.displayMetrics.heightPixels.dp /
                 LocalDensity.current.density
         if (games.isEmpty()) {
-            EmptyResult(
+            WarningMessage(
                 textId = R.string.wrn_no_games
             )
         }
