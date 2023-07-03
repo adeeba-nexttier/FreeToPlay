@@ -11,11 +11,12 @@ class GameRepositoryImpl @Inject constructor(
     private val api: Api
 ): BaseRepository(), GameRepository {
 
+
     override suspend fun getAllGames(): Resource<List<Game>> {
         val response = invokeApi {
             api.getAllGames()
         }
-        return when(response) {
+        return when(response){
             is Resource.Error -> Resource.Error(error = response.error)
             is Resource.Loading -> Resource.Loading()
             is Resource.Success -> Resource.Success(
@@ -36,4 +37,31 @@ class GameRepositoryImpl @Inject constructor(
             )
         }
     }
+
+    override suspend fun getGamesByPlatform(platform: String): Resource<List<Game>> {
+        val response = invokeApi {
+            api.getGamesByPlatform(platform = platform)
+        }
+        return when(response){
+            is Resource.Error -> Resource.Error(error  = response.error)
+            is Resource.Loading -> Resource.Loading()
+            is Resource.Success -> Resource.Success(
+                data = response.data?.map { it.toGame() }?: emptyList()
+            )
+        }
+    }
+
+    override suspend fun sortGames(criteria: String): Resource<List<Game>> {
+        val response = invokeApi {
+            api.sortGames(criteria = criteria)
+        }
+        return when(response){
+            is Resource.Error -> Resource.Error(error  = response.error)
+            is Resource.Loading -> Resource.Loading()
+            is Resource.Success -> Resource.Success(
+                data = response.data?.map { it.toGame() }?: emptyList()
+            )
+        }
+    }
+
 }
