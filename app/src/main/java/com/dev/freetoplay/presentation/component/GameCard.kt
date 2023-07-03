@@ -18,10 +18,13 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.Alignment.Companion.CenterHorizontally
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
@@ -76,27 +79,31 @@ fun GameCard(
             Column(
                 modifier = Modifier
                     .fillMaxWidth()
+                    .fillMaxHeight()
                     .padding(all = 3.dp),
-                verticalArrangement = Arrangement.SpaceAround
+                verticalArrangement = Arrangement.SpaceBetween
             ) {
-                Text(
-                    text = game.title,
-                    modifier = Modifier.padding(all = 5.dp),
-                    style = MaterialTheme.typography.body1,
-                    overflow = TextOverflow.Ellipsis,
-                    color = MaterialTheme.colors.onPrimary
-                )
-                Spacer(modifier = Modifier.padding(all = 3.dp))
-                Box(modifier = Modifier
-                    .fillMaxWidth(fraction = 0.95f)
-                    .fillMaxHeight(fraction = 0.6f)) {
+                Column {
                     Text(
-                        text = game.shortDescription,
-                        modifier = Modifier.fillMaxWidth(fraction = 0.85f),
-                        style = MaterialTheme.typography.caption,
-                        color = MaterialTheme.colors.onSurface,
-                        overflow = TextOverflow.Ellipsis
+                        text = game.title,
+                        modifier = Modifier
+                            .padding(all = 5.dp)
+                            .align(alignment = CenterHorizontally),
+                        style = MaterialTheme.typography.body1,
+                        overflow = TextOverflow.Ellipsis,
+                        color = MaterialTheme.colors.onPrimary
                     )
+                    Box(modifier = Modifier
+                        .fillMaxWidth(fraction = 0.95f)
+                        .fillMaxHeight(fraction = 0.6f)) {
+                        Text(
+                            text = game.shortDescription,
+                            modifier = Modifier.fillMaxWidth(fraction = 0.85f),
+                            style = MaterialTheme.typography.caption,
+                            color = MaterialTheme.colors.onSurface,
+                            overflow = TextOverflow.Ellipsis
+                        )
+                    }
                 }
                 Row(
                     horizontalArrangement = Arrangement.End,
@@ -110,6 +117,7 @@ fun GameCard(
                         borderWidth = 1.dp
                     ) {
                         Text(
+                            modifier = Modifier.padding(all = 5.dp),
                             text = game.genre,
                             style = MaterialTheme.typography.caption,
                             color = Color.Black

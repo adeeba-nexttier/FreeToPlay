@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity() {
                     onSearchButtonClick = {
 
                     },
-                    onGameClick = {
+                    onGameClick = { gameId ->
                         navController.navigate(route = "gameDetail/$gameId")
                     }
                 )

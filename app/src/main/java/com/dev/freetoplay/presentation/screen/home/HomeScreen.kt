@@ -20,6 +20,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.modifier.modifierLocalConsumer
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.legacy.widget.Space
@@ -36,10 +38,12 @@ import com.dev.freetoplay.util.header
 fun HomeScreen(
     onOpenDrawer: () -> Unit,
     onSearchButtonClick: () -> Unit,
-    onGameClick: () -> Unit,
+    onGameClick: (Int) -> Unit,
     availableGames: Resource<List<Game>>
 ) {
     availableGames.data?.let { games ->
+        val screenHeight = LocalContext.current.resources.displayMetrics.heightPixels.dp /
+                LocalDensity.current.density
         if (games.isEmpty()) {
             EmptyResult(
                 textId = R.string.wrn_no_games
@@ -76,7 +80,7 @@ fun HomeScreen(
                     header {
                         CarouselView(
                             modifier = Modifier
-                                .requiredHeight(height = 260.dp)
+                                .requiredHeight(height = 200.dp)
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp, horizontal = 12.dp),
                             urls = games.getUrls(),
@@ -87,8 +91,10 @@ fun HomeScreen(
                     }
                     items(items = games) { game ->
                         GameCard(
+                            modifier = Modifier.padding(all = 3.dp)
+                                .requiredHeight(height = screenHeight * 0.45f),
                             game = game,
-                            onClick = { onGameClick() }
+                            onClick = { onGameClick(game.id) }
                         )
                     }
                 }
