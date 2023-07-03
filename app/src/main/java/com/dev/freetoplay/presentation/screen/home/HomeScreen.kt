@@ -29,12 +29,14 @@ import com.dev.freetoplay.presentation.component.CarouselView
 import com.dev.freetoplay.presentation.component.EmptyResult
 import com.dev.freetoplay.presentation.component.GameCard
 import com.dev.freetoplay.util.Resource
+import com.dev.freetoplay.util.getUrls
 import com.dev.freetoplay.util.header
 
 @Composable
 fun HomeScreen(
     onOpenDrawer: () -> Unit,
     onSearchButtonClick: () -> Unit,
+    onGameClick: () -> Unit,
     availableGames: Resource<List<Game>>
 ) {
     availableGames.data?.let { games ->
@@ -77,14 +79,17 @@ fun HomeScreen(
                                 .requiredHeight(height = 260.dp)
                                 .fillMaxWidth()
                                 .padding(vertical = 8.dp, horizontal = 12.dp),
-                            urls = ,
+                            urls = games.getUrls(),
                             shape = MaterialTheme.shapes.medium,
                             crossFade = 1000
                         )
                         Spacer(modifier = Modifier.height(30.dp))
                     }
                     items(items = games) { game ->
-                        GameCard()
+                        GameCard(
+                            game = game,
+                            onClick = { onGameClick() }
+                        )
                     }
                 }
             }

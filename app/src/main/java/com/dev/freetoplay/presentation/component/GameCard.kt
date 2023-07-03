@@ -19,6 +19,7 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextOverflow
@@ -100,10 +101,22 @@ fun GameCard(
                 Row(
                     horizontalArrangement = Arrangement.End,
                     verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier
+                        .fillMaxWidth()
                         .padding(end = 5.dp)
                 ) {
-
+                    Chip(
+                        backgroundColor = MaterialTheme.colors.primaryVariant,
+                        borderWidth = 1.dp
+                    ) {
+                        Text(
+                            text = game.genre,
+                            style = MaterialTheme.typography.caption,
+                            color = Color.Black
+                        )
+                    }
+                    Spacer(modifier = Modifier.padding(end = 3.dp))
+                    Platform(text = game.platform)
                 }
             }
         }
