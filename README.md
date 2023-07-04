@@ -12,10 +12,10 @@ An android app using jetpack compose, MVVM and clean architecture
 ## Screens
 
 ### Splash Screen
-<img src="[https://your-image-url.type](https://github.com/adeeba-nexttier/FreeToPlay/assets/132334319/d7c91572-a0c4-4db0-903d-2586db263dc6)" width="100" height="100">
+
 
 ### Home Screen
-![Screenshot 2023-07-04 125444](https://github.com/adeeba-nexttier/FreeToPlay/assets/132334319/d7c91572-a0c4-4db0-903d-2586db263dc6)
+<img src="https://github.com/adeeba-nexttier/FreeToPlay/assets/132334319/d7c91572-a0c4-4db0-903d-2586db263dc6" width="150" height="300">
 
 ### Game Detail Screen
 ![Screenshot 2023-07-04 125632](https://github.com/adeeba-nexttier/FreeToPlay/assets/132334319/ccf8fec2-587f-4367-bf2b-c5dcfcfed028)
