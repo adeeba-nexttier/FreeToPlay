@@ -11,6 +11,9 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
 import androidx.compose.material.ScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
@@ -21,15 +24,22 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavHostController
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.navArgument
 import com.dev.freetoplay.domain.model.Game
+import com.dev.freetoplay.presentation.activity.MainViewModel
 import com.dev.freetoplay.presentation.component.drawer.NavigationDrawer
 import com.dev.freetoplay.presentation.component.drawer.NavigationDrawerItem
 import com.dev.freetoplay.presentation.screen.game.GameDetailScreen
 import com.dev.freetoplay.presentation.screen.game.GameDetailViewModel
 import com.dev.freetoplay.presentation.screen.home.HomeScreen
+import com.dev.freetoplay.presentation.screen.search.SearchScreen
+import com.dev.freetoplay.presentation.screen.search.SearchViewModel
+import com.dev.freetoplay.util.ALL_GAMES_KEY
 import com.dev.freetoplay.util.Resource
+import com.dev.freetoplay.util.SEARCH_SCREEN_FILTER_KEY
 import com.intuit.sdp.R
 
 @Composable
@@ -40,7 +50,11 @@ fun Index(
     onOpenDrawer: () -> Unit,
     onSearchButtonClick: () -> Unit,
     onGameClick: (Int) -> Unit,
-    onPlayTheGameClicked: (String) -> Unit
+    onPlayTheGameClicked: (String) -> Unit,
+    onHomeMenuClick: () -> Unit,
+    onPCGamesClick: () -> Unit,
+    onWebGamesClick: () -> Unit,
+    onLatestGamesClick: () -> Unit
 ) {
     Scaffold(
         scaffoldState = scaffoldState,
@@ -72,9 +86,7 @@ fun Index(
                         text = stringResource(id = com.dev.freetoplay.R.string.lbl_home),
                         textStyle = MaterialTheme.typography.subtitle1,
                         textColor = MaterialTheme.colors.onBackground,
-                        onclick = {
-                            // Navigate to home screen
-                        }
+                        onclick = onHomeMenuClick
                     )
                     Spacer(modifier = Modifier.padding(8.dp))
                     NavigationDrawerItem(
@@ -86,9 +98,7 @@ fun Index(
                         text = stringResource(id = com.dev.freetoplay.R.string.lbl_pc_games),
                         textStyle = MaterialTheme.typography.subtitle1,
                         textColor = MaterialTheme.colors.onBackground,
-                        onclick = {
-                            // Navigate to pc games
-                        }
+                        onclick = onPCGamesClick
                     )
                     Spacer(modifier = Modifier.padding(8.dp))
                     NavigationDrawerItem(
@@ -100,9 +110,7 @@ fun Index(
                         text = stringResource(id = com.dev.freetoplay.R.string.lbl_web_games),
                         textStyle = MaterialTheme.typography.subtitle1,
                         textColor = MaterialTheme.colors.onBackground,
-                        onclick = {
-                            // Navigate to web games
-                        }
+                        onclick = onWebGamesClick
                     )
                     Spacer(modifier = Modifier.padding(8.dp))
                     NavigationDrawerItem(
@@ -114,9 +122,7 @@ fun Index(
                         text = stringResource(id = com.dev.freetoplay.R.string.lbl_latest_games),
                         textStyle = MaterialTheme.typography.subtitle1,
                         textColor = MaterialTheme.colors.onBackground,
-                        onclick = {
-                            // Navigate to latest games
-                        }
+                        onclick = onLatestGamesClick
                     )
                 }
             )
@@ -145,6 +151,26 @@ fun Index(
                     onPlayTheGameClicked = { gameUrl ->
                         onPlayTheGameClicked(gameUrl)
                     }
+                )
+            }
+            composable(
+                route = Screen.SearchScreen.route,
+                arguments = listOf(
+                    navArgument(name = SEARCH_SCREEN_FILTER_KEY) {
+                        defaultValue = ""
+                        type = NavType.StringType
+                    }
+                )
+            ) {
+                val viewModel = hiltViewModel<SearchViewModel>()
+                val games =
+                    navController.previousBackStackEntry?.savedStateHandle?.get<List<Game>>(key = ALL_GAMES_KEY)
+                        ?: emptyList()
+                SearchScreen(
+                    viewModel = viewModel,
+                    navController = navController,
+                    scaffoldState = scaffoldState,
+                    games = games,
                 )
             }
         }
